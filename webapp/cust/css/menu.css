@@ -1,0 +1,66 @@
+/* new speed 메뉴*/
+#menu_news_feed {
+    background: #32394A;
+    -webkit-box-sizing: border-box;
+    left: -240px;
+    background: #003152;
+    min-height: 1024px;
+    overflow: hidden;
+    position: absolute;
+    width: 240px;
+	z-index:300;
+}
+
+#menu_news_feed #menu_news_feed_wrap {
+    padding: 30px;
+}
+
+#menu_news_feed header {
+    border-bottom: 1px solid #8098a9;
+}
+
+#menu_news_feed header dt {
+    float: left;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    position: relative;
+    top: -8px;
+}
+
+#menu_news_feed {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+#menu_news_feed header dd, #menu_news_feed header a {
+    padding: 8px 0;
+    color: white;
+}
+
+#menu_news_feed header dd, #menu_news_feed section {
+    padding: 5px 0;
+}
+
+#menu_news_feed section {
+    border-bottom: 1px solid #8098a9;
+    padding: 15px 26px;
+    color: white;
+}
+
+#menu_news_feed section, #menu_news_feed section a {
+    color: white;
+}
+
+#menu_news_feed section h3 {
+    font-weight: bold;
+    margin-bottom: 15px;
+	text-indent:0;
+}
+
+#menu_news_feed section h3 a {
+    float: right;
+}
+
+#menu_news_feed section li {
+    margin: 5px 0;
+}

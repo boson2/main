@@ -1,0 +1,102 @@
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+	
+<sqlMap namespace="cust">
+
+	
+	
+	<!-- Query for [ TODAY_WORD : 오늘의 말씀 ] Table -->
+	<resultMap id="cust_TodayWordVO_PK" class="org.tok.cust.admin.todayWord.service.TodayWordPK">
+	
+		<result property="wordId" column="WORD_ID" columnIndex="1"/>	
+	</resultMap>
+	
+	<resultMap id="cust_TodayWordVO" class="org.tok.cust.admin.todayWord.service.TodayWordVO">
+	 
+		<result property="wordId" column="WORD_ID" columnIndex="1"/>	 
+		<result property="title" column="TITLE" columnIndex="2"/>	 
+		<result property="content" column="CONTENT" columnIndex="3"/>	 
+		<result property="startDate" column="START_DATE" columnIndex="4"/>	
+	</resultMap>
+	
+	<select id="todayWord.totalCount" resultClass="int">
+
+			SELECT COUNT(*) totcnt
+			FROM TODAY_WORD
+			WHERE 1=1	
+					<isNotNull  prepend=" AND " property="titleCond">TITLE LIKE nvl(#titleCond#,'%')||'%'</isNotNull>
+					<isNotNull  prepend=" AND " property="titleCond2">CONTENT LIKE nvl(#titleCond2#,'%')||'%'</isNotNull>
+	</select>
+	
+	<select id="todayWord.findByPage" resultMap="cust_TodayWordVO_PK">
+			<!--
+			SELECT tb.* FROM ( 
+				
+				SELECT <isNotNull property="sortColumn">ROW_NUMBER() OVER(ORDER BY $sortColumn$ $sortMethod$) as rnum, </isNotNull><isNull property="sortColumn">rownum rnum, </isNull>WORD_ID 
+				FROM TODAY_WORD 
+				WHERE rownum &lt;= #endRow# 
+					<isNotNull  prepend=" AND " property="titleCond">TITLE LIKE nvl(#titleCond#,'%')||'%'</isNotNull>
+			) tb WHERE tb.rnum BETWEEN #startRow# AND #endRow#
+			-->
+			SELECT tb2.* FROM (
+				SELECT tb1.*, rownum rnum FROM (
+					SELECT WORD_ID
+					FROM TODAY_WORD
+					WHERE 1=1 
+					<isNotNull  prepend=" AND " property="titleCond">TITLE LIKE '%'||nvl(#titleCond#,'%')||'%'</isNotNull>
+					<isNotNull  prepend=" AND " property="titleCond2">CONTENT LIKE '%'||nvl(#titleCond2#,'%')||'%'</isNotNull>
+					<isNotNull property="sortColumn"> ORDER BY $sortColumn$ $sortMethod$ </isNotNull>
+				) tb1
+			) tb2 WHERE tb2.rnum BETWEEN #startRow# AND #endRow#
+			
+	</select>
+
+	<select id="todayWord.findAll" resultMap="cust_TodayWordVO_PK">
+			SELECT WORD_ID
+			FROM TODAY_WORD
+	</select>
+	
+
+	<select id="todayWord.detail" resultMap="cust_TodayWordVO">
+		<![CDATA[
+			SELECT WORD_ID,TITLE,CONTENT,START_DATE
+			FROM TODAY_WORD
+			WHERE 1=1 
+				AND WORD_ID=#wordId#
+		]]>
+	</select>
+	
+	<select id="todayWord.exist" resultClass="int">
+			SELECT COUNT(*) cnt
+			FROM TODAY_WORD
+			WHERE 1=1 
+				AND WORD_ID=#wordId#
+	</select>
+	
+	<insert id="todayWord.insert">
+		<![CDATA[
+			INSERT INTO TODAY_WORD
+				( WORD_ID,TITLE,CONTENT,START_DATE )
+			VALUES ( #wordId#,#title#,#content#,#startDate# )
+		]]>
+	</insert>
+	
+	<update id="todayWord.update">
+		<![CDATA[
+			UPDATE TODAY_WORD
+			SET WORD_ID=#wordId#,TITLE=#title#,CONTENT=#content#,START_DATE=#startDate#
+			WHERE 1=1 
+				AND WORD_ID=#wordId#
+		]]>
+	</update>
+	
+	<delete id="todayWord.delete">
+		<![CDATA[
+			DELETE FROM TODAY_WORD
+			WHERE 1=1 
+				AND WORD_ID=#wordId#
+		]]>
+	</delete>
+	
+
+</sqlMap>
+

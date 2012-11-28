@@ -1,0 +1,27 @@
+/* base */
+
+@import url(reset.css);
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html,body{
+	height:100%;	
+}
+
+body {
+	font-family: "돋움", Dotum, "굴림", Gulim, AppleGothic, Sans-serif;
+    word-spacing: -2px;
+    font-size:13px;
+    line-height: 120%;
+}
+
+.hide {
+    display: none;
+}
+
+h3{
+	text-indent:-9999px;
+}

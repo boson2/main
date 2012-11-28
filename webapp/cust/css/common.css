@@ -1,0 +1,19 @@
+.color-gray {
+    color: #5e5e5e;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.text-indent {
+    text-index: -9999px;
+}
+
+.clear-both {
+    clear: both;
+}
+
+.no-padding{
+	padding:0 !important;
+}

@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:flow="http://www.springframework.org/schema/webflow-config"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+                           http://www.springframework.org/schema/webflow-config
+		                   http://www.springframework.org/schema/webflow-config/spring-webflow-config-1.0.xsd
+                           http://www.springframework.org/schema/tx 
+                           http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+                           http://www.springframework.org/schema/aop 
+                           http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+
+	<!-- View Resolver for JSPs -->
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/WEB-INF/apps/cust/WEB-INF/view/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+ 
+	<bean id="methodNameResolver"
+		class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+		<property name="paramName">
+			<value>method</value>
+		</property>
+		<property name="defaultMethodName">
+			<value>list</value>
+		</property>
+	</bean>
+	
+	<bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="java.lang.Exception">friendlyError</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- Multipart Resolver -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="EUC-KR"/>
+	</bean>
+
+	<!-- 포털 로그인 처리기 -->
+	<bean id="loginController" class="org.tok.cust.user.control.TalkMultiActionLoginController">
+		<property name="userManager" ref="org.tok.cust.user.control.UserManager" />
+	</bean>
+	<bean id="mobileUserController" class="org.tok.cust.user.control.TalkMobileUserController">
+		<property name="userManager" ref="org.tok.cust.user.control.UserManager" />
+	</bean>
+	
+	<!-- 포털 사용자 로그아웃 / 사용자변경 처리기 -->
+	<bean id="userController" class="org.tok.cust.user.control.TalkUserController">
+		<property name="userManager" ref="org.tok.cust.user.control.UserManager" />
+	</bean>
+	
+	<!-- 포털 비밀번호 변경 처리기 -->
+	<bean id="passwordChangeController" class="org.tok.cust.user.control.TalkPasswordChangeController">
+		<property name="userManager" ref="org.tok.cust.user.control.UserManager" />
+		<property name="formView" value="user/passwordChange"/>
+	</bean>
+	
+	<!-- 회원 가입 처리기 -->
+	<bean id="joinController" class="org.tok.cust.user.control.TalkJoinController">
+		<property name="userManager" ref="org.tok.cust.user.control.UserManager" />
+		<property name="talkUserValidator" ref="talkUserValidator"/>
+		<property name="pages">
+			<list>
+				<value>user/join/start</value> 			<!-- 0 page: 회원 가입 시작 페이지 -->
+				<value>user/join/provision</value> 		<!-- 1 page: 약관 동의 페이지 -->
+				<value>user/join/regNoConfirm</value>	<!-- 2 page: 실명인증 페이지 -->
+				<value>user/join/idList</value>			<!-- 3 page: 가입된 아이디 리스트 페이지 -->
+				<value>user/join/confirm</value>		<!-- 4 page: 가입된 아이디 인증 페이지-->
+				<value>user/join/userInfo</value>		<!-- 5 page: 회원정보 입력 페이지 -->
+				<value>user/join/userInfoConfirm</value><!-- 6 page: 입력된 회원정보 확인 페이지 -->
+				<value>user/join/complete</value>		<!-- 7 page: 가입 완료 페이지 -->
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 아이디 중복 확인 처리기 -->
+	<bean id="overlapConfirmController" class="org.tok.cust.user.control.TalkConfirmController" >
+		<property name="userManager" ref="org.tok.cust.user.control.UserManager" />
+		<property name="formView" value="/user/join/overlapConfirm"/>
+		<property name="successView" value="/user/join/overlapConfirm"/>
+	</bean>
+	
+	<!-- 회원 정보 변경 처리기 -->
+	<bean id="informationChangeController" class="org.tok.cust.user.control.TalkInformationChangeController">
+		<property name="userManager" ref="org.tok.cust.user.control.UserManager" />
+		<property name="talkUserValidator" ref="talkUserValidator"/>
+		<property name="pages">
+			<list>
+				<value>user/change/start</value>			<!-- 0 page: 회원정보 변경 시작 페이지-->
+				<value>user/change/confirm</value>			<!-- 1 page: 비밀번호 인증 페이지 -->
+				<value>user/change/userInfo</value>			<!-- 2 page: 회원정보 변경 페이지 -->
+				<value>user/change/userInfoConfirm</value>	<!-- 3 page: 변경된 회원정보 확인 페이지 -->
+				<value>user/change/complete</value>			<!-- 4 page: 회원정보 변경 완료 페이지 -->
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 아이디/비밀번호 찾기 처리기 -->
+	<bean id="userHelpController" class="org.tok.cust.user.control.TalkUserHelpController" >
+		<property name="userManager" ref="org.tok.cust.user.control.UserManager" />
+		<property name="talkUserValidator" ref="talkUserValidator"/>
+		<property name="formView" value="/user/help/inquiry"/>
+		<property name="successView" value="/user/help/inquiryResult"/>
+	</bean>
+	
+	<!-- 우편번호 검색 처리기 -->
+	<bean id="searchZipController" class="org.tok.cust.tool.control.TalkSearchZipController" >
+		<property name="toolManager" ref="tokToolManager" /> 
+		<property name="formView" value="/tool/searchZip"/>
+		<property name="successView" value="/tool/searchZip"/>
+	</bean>
+	
+	<!-- Ajax 회원 가입 처리기 -->
+	<bean id="ajaxJoinController" class="org.tok.cust.user.control.TalkAjaxJoinController">
+		<property name="userManager" ref="org.tok.cust.user.control.UserManager" />
+		<property name="talkUserValidator" ref="talkUserValidator"/>
+	</bean>
+	
+	<!-- Ajax confirm 처리기 -->
+	<bean id="ajaxConfirmController" class="org.tok.cust.user.control.TalkAjaxConfirmController">
+		<property name="userManager" ref="org.tok.cust.user.control.UserManager" />
+		<property name="talkUserValidator" ref="talkUserValidator"/>
+	</bean>
+	
+	<!-- Ajax 우편번호 검색 처리기 -->
+	<bean id="ajaxSearchZipController" class="org.tok.cust.tool.control.TalkAjaxSearchZipController" >
+		<property name="toolManager" ref="tokToolManager" />
+	</bean>
+	
+	<!-- Ajax 회원 정보 변경 처리기 -->
+	<bean id="ajaxChangeController" class="org.tok.cust.user.control.TalkAjaxInfoChangeController">
+		<property name="userManager" ref="org.tok.cust.user.control.UserManager" />
+		<property name="talkUserValidator" ref="talkUserValidator"/>
+	</bean>
+	
+	<!-- 그룹 간 사용자 검색 처리기 -->
+	<bean id="searchUserController" class="org.tok.cust.tool.control.TalkSearchUserController" >
+		<property name="toolManager" ref="tokToolManager" />
+	</bean>
+	
+	<!-- Multi-part file upload 처리기 -->
+	<bean id="fileUploadController" class="org.tok.cust.tool.control.TalkMultipartUploadController">
+		<property name="toolManager" ref="tokToolManager"/>
+	</bean>
+	
+	<!-- 모바일관련 처리기 -->
+	<bean id="mobileUtilityController" class="org.tok.cust.mobile.web.MobileUtilityController"/>
+	
+	<!-- Tok admin-->
+	<bean id="cust.DymicMenuController" class="org.tok.cust.admin.dymicMenu.web.DymicMenuController">	
+		<property name="dymicMenuService" ref="org.tok.cust.admin.dymicMenu.service.DymicMenuService"/>
+	</bean>	 
+	<bean id="cust.UserpassController" class="org.tok.cust.admin.userpass.web.UserpassController">	
+		<property name="userpassService" ref="org.tok.cust.admin.userpass.service.UserpassService"/>
+	</bean>	 
+	<bean id="cust.GradeController" class="org.tok.cust.admin.grade.web.GradeController">	
+		<property name="gradeService" ref="org.tok.cust.admin.grade.service.GradeService"/>
+	</bean>	 
+	<bean id="cust.TodayWordController" class="org.tok.cust.admin.todayWord.web.TodayWordController">	
+		<property name="todayWordService" ref="org.tok.cust.admin.todayWord.service.TodayWordService"/>
+	</bean>	
+	
+	<!--// 회원 URL 메핑 //-->
+    <bean id="memberUrlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="interceptors">
+			<list>
+				<ref bean="securityInterceptor"/>
+			</list>
+		</property>
+        <property name="mappings">
+            <props>
+            	<!--prop key="/page/board.cust">boardController</prop-->
+				<prop key="/user/logout.cust">loginController</prop>
+				<prop key="/user/changeUser.cust">userController</prop>
+				<prop key="/user/changePassword.cust">passwordChangeController</prop>
+				<prop key="/user/changeInformation.cust">informationChangeController</prop>
+				<prop key="/user/ajaxChangeInfo.cust">ajaxChangeController</prop>
+				
+				<prop key="/tool/searchUser.cust">searchUserController</prop>	<!-- 그룹간 사용자 검색 -->
+				<prop key="/tool/fileUpload.cust">fileUploadController</prop>
+				
+				<prop key="/mobile/pushForAJAX.cust">mobileUtilityController</prop>
+				
+				<!-- Tok API -->
+		        <prop key="/user/mobile/logout.cust">mobileUserController</prop>
+				
+				<!-- Tok Admin API -->
+				<prop key="/dymicMenu/list.cust">cust.DymicMenuController</prop>
+				<prop key="/dymicMenu/listForAjax.cust">cust.DymicMenuController</prop>
+				<prop key="/dymicMenu/listForChooser.cust">cust.DymicMenuController</prop>
+				<prop key="/dymicMenu/detail.cust">cust.DymicMenuController</prop>
+				<prop key="/dymicMenu/detailForAjax.cust">cust.DymicMenuController</prop>
+				<prop key="/dymicMenu/addForAjax.cust">cust.DymicMenuController</prop>
+				<prop key="/dymicMenu/updateForAjax.cust">cust.DymicMenuController</prop>
+				<prop key="/dymicMenu/removeForAjax.cust">cust.DymicMenuController</prop>
+				<prop key="/dymicMenu/changeOrderForAjax.cust">cust.DymicMenuController</prop>
+				<prop key="/dymicMenu/mainMenu.cust">cust.DymicMenuController</prop>
+				 
+				<prop key="/userpass/list.cust">cust.UserpassController</prop>
+				<prop key="/userpass/listForAjax.cust">cust.UserpassController</prop>
+				<prop key="/userpass/listNewForAjax.cust">cust.UserpassController</prop>
+				<prop key="/userpass/listForChooser.cust">cust.UserpassController</prop>
+				<prop key="/userpass/detail.cust">cust.UserpassController</prop>
+				<prop key="/userpass/detailForAjax.cust">cust.UserpassController</prop>
+				<prop key="/userpass/addForAjax.cust">cust.UserpassController</prop>
+				<prop key="/userpass/updateForAjax.cust">cust.UserpassController</prop>
+				<prop key="/userpass/removeForAjax.cust">cust.UserpassController</prop>
+				<prop key="/userpass/accessDenyForAjax.cust">cust.UserpassController</prop>
+				<prop key="/userpass/approveForAjax.cust">cust.UserpassController</prop>
+				 
+				<prop key="/grade/list.cust">cust.GradeController</prop>
+				<prop key="/grade/listForAjax.cust">cust.GradeController</prop>
+				<prop key="/grade/listForChooser.cust">cust.GradeController</prop>
+				<prop key="/grade/detail.cust">cust.GradeController</prop>
+				<prop key="/grade/detailForAjax.cust">cust.GradeController</prop>
+				<prop key="/grade/addForAjax.cust">cust.GradeController</prop>
+				<prop key="/grade/updateForAjax.cust">cust.GradeController</prop>
+				<prop key="/grade/removeForAjax.cust">cust.GradeController</prop>
+				<prop key="/grade/changeOrderForAjax.cust">cust.GradeController</prop>
+				 
+				<prop key="/todayWord/list.cust">cust.TodayWordController</prop>
+				<prop key="/todayWord/listForAjax.cust">cust.TodayWordController</prop>
+				<prop key="/todayWord/listForChooser.cust">cust.TodayWordController</prop>
+				<prop key="/todayWord/detail.cust">cust.TodayWordController</prop>
+				<prop key="/todayWord/detailForAjax.cust">cust.TodayWordController</prop>
+				<prop key="/todayWord/addForAjax.cust">cust.TodayWordController</prop>
+				<prop key="/todayWord/updateForAjax.cust">cust.TodayWordController</prop>
+				<prop key="/todayWord/removeForAjax.cust">cust.TodayWordController</prop>
+				
+			</props>
+        </property> 
+    </bean>
+	
+	<!--// 비회원 URL 메핑 //-->
+    <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <props>
+            	<!-->prop key="/user/login.cust">loginEnpassController</prop-->
+            	<prop key="/user/login.cust">loginController</prop>
+            	<prop key="/user/loginProcess.cust">loginController</prop> 
+            	<prop key="/user/enpassLoginProcess.cust">loginController</prop> 
+				<prop key="/user/join.cust">joinController</prop>
+				<prop key="/user/overlap.cust">overlapConfirmController</prop>
+				<prop key="/user/help.cust">userHelpController</prop>
+				<prop key="/user/ajaxJoin.cust">ajaxJoinController</prop>
+				<prop key="/user/ajaxConfirm.cust">ajaxConfirmController</prop>
+				
+				<prop key="/user/mobile/login.cust">mobileUserController</prop>
+				<prop key="/user/mobile/firstLogin.cust">mobileUserController</prop>
+				<prop key="/user/mobile/profile.cust">mobileUserController</prop>
+				<prop key="/user/mobile/getAddress.cust">mobileUserController</prop>
+
+				<prop key="/tool/ajaxSearchZip.cust">ajaxSearchZipController</prop>
+				<prop key="/tool/searchZip.cust">searchZipController</prop>
+			</props>
+        </property> 
+    </bean>
+    
+
+    
+</beans>

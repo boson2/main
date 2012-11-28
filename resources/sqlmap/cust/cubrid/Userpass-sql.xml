@@ -1,0 +1,213 @@
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+	
+<sqlMap namespace="cust">
+
+	
+	
+	<!-- Query for [ USERPASS : 개인정보 ] Table -->
+	<resultMap id="cust_UserpassVO_PK" class="org.tok.cust.admin.userpass.service.UserpassPK">
+	
+		<result property="userId" column="USER_ID" columnIndex="1"/>	
+	</resultMap>
+	
+	<resultMap id="cust_UserpassVO2" class="org.tok.cust.admin.userpass.service.UserpassVO">
+		<result property="nmKor" column="NM_KOR" columnIndex="1"/>	 
+		<result property="userId" column="USER_ID" columnIndex="2"/>	 
+		<result property="columnValue" column="COLUMN_VALUE" columnIndex="3"/>	 
+		<result property="gradeCd" column="GRADE_CD" columnIndex="4"/>	 
+		<result property="emailAddr" column="EMAIL_ADDR" columnIndex="5"/>	 
+		<result property="homeTel" column="HOME_TEL" columnIndex="6"/>	 
+		<result property="mobileTel" column="MOBILE_TEL" columnIndex="7"/>	 
+		<result property="homeZip" column="HOME_ZIP" columnIndex="8"/>	 
+		<result property="homeAddr1" column="HOME_ADDR1" columnIndex="9"/>	 
+		<result property="homeAddr2" column="HOME_ADDR2" columnIndex="10"/>	 
+		<result property="birthYmd" column="BIRTH_YMD" columnIndex="11"/>	 
+		<result property="intro" column="INTRO" columnIndex="12"/>	 
+		<result property="sexFlag" column="SEX_FLAG" columnIndex="13"/>	 
+		<result property="regDatim" column="REG_DATIM" columnIndex="14"/>	 
+		<result property="accessFlag" column="IS_ENABLED" columnIndex="15"/>	 
+		<result property="lastAccess" column="LAST_ACCESS" columnIndex="16"/>	 
+	</resultMap>
+	
+	<resultMap id="cust_UserpassVO" class="org.tok.cust.admin.userpass.service.UserpassVO">
+		<result property="nmKor" column="NM_KOR" columnIndex="1"/>	 
+		<result property="userId" column="USER_ID" columnIndex="2"/>	 
+		<result property="columnValue" column="COLUMN_VALUE" columnIndex="3"/>	 
+		<result property="gradeCd" column="GRADE_CD" columnIndex="4"/>	 
+		<result property="emailAddr" column="EMAIL_ADDR" columnIndex="5"/>	 
+		<result property="homeTel" column="HOME_TEL" columnIndex="6"/>	 
+		<result property="mobileTel" column="MOBILE_TEL" columnIndex="7"/>	 
+		<result property="homeZip" column="HOME_ZIP" columnIndex="8"/>	 
+		<result property="homeAddr1" column="HOME_ADDR1" columnIndex="9"/>	 
+		<result property="homeAddr2" column="HOME_ADDR2" columnIndex="10"/>	 
+		<result property="birthYmd" column="BIRTH_YMD" columnIndex="11"/>	 
+		<result property="intro" column="INTRO" columnIndex="12"/>	 
+		<result property="sexFlag" column="SEX_FLAG" columnIndex="13"/>	 
+		<result property="regDatim" column="REG_DATIM" columnIndex="14"/>	
+		<result property="accessFlag" column="IS_ENABLED" columnIndex="15"/> 
+		<result property="guide" column="USER_INFO05" columnIndex="16"/>
+	</resultMap>
+	
+	<select id="userpass.totalCount" resultClass="int">
+
+			SELECT COUNT(*) totcnt
+			FROM USERPASS
+			WHERE 1=1 AND (USER_INFO01 IS NULL OR USER_INFO01=0)
+					<isNotNull  prepend=" AND " property="gradeCdCond">GRADE_CD LIKE nvl(#gradeCdCond#,'%')||'%'</isNotNull>
+					<isNotNull  prepend=" AND " property="userIdCond">USER_ID LIKE nvl(#userIdCond#,'%')||'%'</isNotNull>
+					<isNotNull  prepend=" AND " property="nmKorCond">NM_KOR LIKE '%'||nvl(#nmKorCond#,'%')||'%'</isNotNull>
+	</select>
+	
+	<select id="userpass.findByPage" resultMap="cust_UserpassVO2">
+			SELECT tb2.* FROM (
+				SELECT tb1.*, rownum rnum FROM (
+					SELECT a.NM_KOR,a.USER_ID,'' AS COLUMN_VALUE,a.GRADE_CD,a.EMAIL_ADDR,a.HOME_TEL,a.MOBILE_TEL,a.HOME_ZIP,a.HOME_ADDR1,a.HOME_ADDR2,a.BIRTH_YMD,a.INTRO,a.SEX_FLAG,a.REG_DATIM,0 AS IS_ENABLED,(SELECT MAX(b.reg_datim) FROM action_hist b WHERE b.user_id=a.USER_ID) AS LAST_ACCESS
+					FROM USERPASS a
+					WHERE 1=1 AND (USER_INFO01 IS NULL OR USER_INFO01=0)
+					<isNotNull  prepend=" AND " property="gradeCdCond">a.GRADE_CD LIKE nvl(#gradeCdCond#,'%')||'%'</isNotNull>
+					<isNotNull  prepend=" AND " property="userIdCond">a.USER_ID LIKE nvl(#userIdCond#,'%')||'%'</isNotNull>
+					<isNotNull  prepend=" AND " property="nmKorCond">a.NM_KOR LIKE '%'||nvl(#nmKorCond#,'%')||'%'</isNotNull>
+					<isNotNull property="sortColumn"> ORDER BY $sortColumn$ $sortMethod$ </isNotNull>
+				) tb1
+			) tb2 WHERE tb2.rnum BETWEEN #startRow# AND #endRow#
+	</select>
+	
+	<select id="userpass.newTotalCount" resultClass="int">
+
+			SELECT COUNT(*) totcnt
+			FROM USERPASS
+			WHERE 1=1 AND (USER_INFO01 IS NOT NULL AND USER_INFO01=1)
+					<isNotNull  prepend=" AND " property="gradeCdCond">GRADE_CD LIKE nvl(#gradeCdCond#,'%')||'%'</isNotNull>
+					<isNotNull  prepend=" AND " property="userIdCond">USER_ID LIKE nvl(#userIdCond#,'%')||'%'</isNotNull>
+					<isNotNull  prepend=" AND " property="nmKorCond">NM_KOR LIKE '%'||nvl(#nmKorCond#,'%')||'%'</isNotNull>
+	</select>
+	
+	<select id="userpass.findNewByPage" resultMap="cust_UserpassVO">
+			SELECT tb2.* FROM (
+				SELECT tb1.*, rownum rnum FROM (
+					SELECT NM_KOR,USER_ID,'' AS COLUMN_VALUE,GRADE_CD,EMAIL_ADDR,HOME_TEL,MOBILE_TEL,HOME_ZIP,HOME_ADDR1,HOME_ADDR2,BIRTH_YMD,INTRO,SEX_FLAG,REG_DATIM,0 AS IS_ENABLED,USER_INFO05
+					FROM USERPASS
+					WHERE 1=1 AND (USER_INFO01 IS NOT NULL AND USER_INFO01=1)
+					<isNotNull  prepend=" AND " property="gradeCdCond">GRADE_CD LIKE nvl(#gradeCdCond#,'%')||'%'</isNotNull>
+					<isNotNull  prepend=" AND " property="userIdCond">USER_ID LIKE nvl(#userIdCond#,'%')||'%'</isNotNull>
+					<isNotNull  prepend=" AND " property="nmKorCond">NM_KOR LIKE '%'||nvl(#nmKorCond#,'%')||'%'</isNotNull>
+					<isNotNull property="sortColumn"> ORDER BY $sortColumn$ $sortMethod$ </isNotNull>
+				) tb1
+			) tb2 WHERE tb2.rnum BETWEEN #startRow# AND #endRow#
+	</select>
+
+	<select id="userpass.findAll" resultMap="cust_UserpassVO_PK">
+			SELECT USER_ID
+			FROM USERPASS
+	</select>
+	
+
+	<select id="userpass.detail" resultMap="cust_UserpassVO">
+		<![CDATA[
+			SELECT a.NM_KOR,a.USER_ID,'' AS COLUMN_VALUE,a.GRADE_CD,a.EMAIL_ADDR,a.HOME_TEL,a.MOBILE_TEL,a.HOME_ZIP,a.HOME_ADDR1,a.HOME_ADDR2,a.BIRTH_YMD,a.INTRO,a.SEX_FLAG,a.REG_DATIM,b.IS_ENABLED,a.USER_INFO05
+			FROM USERPASS a INNER JOIN SECURITY_PRINCIPAL b ON a.USER_ID=b.SHORT_PATH
+			WHERE 1=1 
+				AND a.USER_ID=#userId#
+		]]>
+	</select>
+	
+	<select id="userpass.exist" resultClass="int">
+			SELECT COUNT(*) cnt
+			FROM USERPASS
+			WHERE 1=1 
+				AND USER_ID=#userId#
+	</select>
+	
+	<insert id="userpass.insert">
+		<![CDATA[
+			INSERT INTO USERPASS
+				( NM_KOR,USER_ID,GRADE_CD,EMAIL_ADDR,HOME_TEL,MOBILE_TEL,HOME_ZIP,HOME_ADDR1,HOME_ADDR2,BIRTH_YMD,INTRO,SEX_FLAG,REG_DATIM,USER_INFO05 )
+			VALUES ( #nmKor#,#userId#,#gradeCd#,#emailAddr#,#homeTel#,#mobileTel#,#homeZip#,#homeAddr1#,#homeAddr2#,#birthYmd#,#intro#,#sexFlag#,SYSDATE,#guide# )
+		]]>
+	</insert>
+	
+	<insert id="securityCredential.insert">
+		<![CDATA[
+			INSERT INTO SECURITY_CREDENTIAL
+				( CREDENTIAL_ID,PRINCIPAL_ID,COLUMN_VALUE,UPDATE_REQUIRED,AUTH_FAILURES,MODIFIED_DATE )
+			VALUES ( #credentialId#,#principalId#,#columnValue#,#updateRequired#,#authFailures#,#modifiedDate# )
+		]]>
+	</insert>
+	
+	<update id="userpass.update">
+		<![CDATA[
+			UPDATE USERPASS
+			SET NM_KOR=#nmKor#,USER_ID=#userId#,GRADE_CD=#gradeCd#,EMAIL_ADDR=#emailAddr#,HOME_TEL=#homeTel#,MOBILE_TEL=#mobileTel#,HOME_ZIP=#homeZip#,HOME_ADDR1=#homeAddr1#,HOME_ADDR2=#homeAddr2#,BIRTH_YMD=#birthYmd#,INTRO=#intro#,SEX_FLAG=#sexFlag#,USER_INFO05=#guide#
+			WHERE 1=1 
+				AND USER_ID=#userId#
+		]]>
+	</update>
+	
+	<update id="securityCredential.update">
+		<![CDATA[
+			UPDATE SECURITY_CREDENTIAL
+			SET CREDENTIAL_ID=#credentialId#,PRINCIPAL_ID=#principalId#,COLUMN_VALUE=#columnValue#,UPDATE_REQUIRED=#updateRequired#,AUTH_FAILURES=#authFailures#,MODIFIED_DATE=#modifiedDate#
+			WHERE 1=1 
+				AND CREDENTIAL_ID=#credentialId#
+		]]>
+	</update>
+	
+	<delete id="userpass.deleteSecurityPermission">
+		<![CDATA[
+			DELETE FROM SECURITY_PERMISSION
+			WHERE PRINCIPAL_ID=(SELECT PRINCIPAL_ID FROM SECURITY_PRINCIPAL WHERE PRINCIPAL_TYPE='U' AND SHORT_PATH=#userId#)
+		]]>
+	</delete>
+	
+	<delete id="userpass.deleteUserRole">
+		<![CDATA[
+			DELETE FROM SECURITY_USER_ROLE
+			WHERE USER_ID=(SELECT PRINCIPAL_ID FROM SECURITY_PRINCIPAL WHERE PRINCIPAL_TYPE='U' AND SHORT_PATH=#userId#)
+		]]>
+	</delete>
+	
+	<delete id="userpass.delete">
+		<![CDATA[
+			DELETE FROM USERPASS
+			WHERE 1=1 
+				AND USER_ID=#userId#
+		]]>
+	</delete>
+	
+	<delete id="userpass.deleteSecurityPrincipal">
+		<![CDATA[
+			DELETE FROM SECURITY_PRINCIPAL
+			WHERE PRINCIPAL_TYPE='U' AND SHORT_PATH=#userId#
+		]]>
+	</delete>
+	
+	<update id="securityPrincipal.access">
+		<![CDATA[
+			UPDATE SECURITY_PRINCIPAL
+			SET IS_ENABLED=#accessFlag#
+			WHERE 1=1 
+				AND SHORT_PATH=#userId#
+		]]>
+	</update>
+	
+	<update id="userpass.accessDeny">
+		<![CDATA[
+			UPDATE SECURITY_PRINCIPAL
+			SET IS_ENABLED=0
+			WHERE 1=1 
+				AND SHORT_PATH=#userId#
+		]]>
+	</update>
+	
+	<update id="userpass.approve">
+		<![CDATA[
+			UPDATE USERPASS
+			SET USER_INFO01=0
+			WHERE 1=1 
+				AND USER_ID=#userId#
+		]]>
+	</update>
+	
+
+</sqlMap>
+

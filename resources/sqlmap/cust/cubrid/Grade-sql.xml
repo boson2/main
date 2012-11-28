@@ -1,0 +1,176 @@
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+	
+<sqlMap namespace="cust">
+
+	
+	
+	<!-- Query for [ CODEBASE : 등급관리 ] Table -->
+	<resultMap id="cust_GradeVO_PK" class="org.tok.cust.admin.grade.service.GradePK">
+	
+		<result property="code" column="CODE" columnIndex="1"/>	
+	</resultMap>
+	
+	<resultMap id="cust_GradeVO" class="org.tok.cust.admin.grade.service.GradeVO">
+	 
+		<result property="code" column="CODE" columnIndex="1"/>	 
+		<result property="codeName" column="CODE_NAME" columnIndex="2"/>	
+		<result property="sortOrder" column="CODE_TAG1" columnIndex="2"/> 
+		<result property="remark" column="REMARK" columnIndex="3"/>	
+	</resultMap>
+	
+	<select id="grade.totalCount" resultClass="int">
+
+			SELECT COUNT(*) totcnt
+			FROM CODEBASE
+			WHERE 1=1 AND CODE!='0000000000' AND SYSTEM_CODE='PT' AND CODE_ID='118' AND LANG_KND='ko'	
+	</select>
+	
+	<select id="grade.findByPage" resultMap="cust_GradeVO_PK">
+			SELECT tb2.* FROM (
+				SELECT tb1.*, rownum rnum FROM (
+					SELECT CODE
+					FROM CODEBASE
+					WHERE 1=1 AND CODE!='0000000000' AND SYSTEM_CODE='PT' AND CODE_ID='118' AND LANG_KND='ko'	
+					ORDER BY CODE_TAG1 ASC
+				) tb1
+			) tb2 WHERE tb2.rnum BETWEEN #startRow# AND #endRow#
+			
+	</select>
+
+	<select id="grade.findAll" resultMap="cust_GradeVO">
+			SELECT CODE,CODE_NAME,CODE_TAG1,REMARK
+			FROM CODEBASE
+			WHERE 1=1 AND CODE!='0000000000' AND SYSTEM_CODE='PT' AND CODE_ID='118' AND LANG_KND='ko'	
+			ORDER BY CODE_TAG1 ASC
+	</select>
+	
+
+	<select id="grade.detail" resultMap="cust_GradeVO">
+		<![CDATA[
+			SELECT CODE,CODE_NAME,CODE_TAG1,REMARK
+			FROM CODEBASE
+			WHERE 1=1 AND SYSTEM_CODE='PT' AND CODE_ID='118' AND LANG_KND='ko'	
+				AND CODE=#code#
+		]]>
+	</select>
+	
+	<select id="grade.exist" resultClass="int">
+			SELECT COUNT(*) cnt
+			FROM CODEBASE
+			WHERE 1=1 AND SYSTEM_CODE='PT' AND CODE_ID='118' AND LANG_KND='ko'	
+				AND CODE=#code#
+	</select>
+	
+	<insert id="grade.insert">
+		<![CDATA[
+			INSERT INTO CODEBASE
+				( SYSTEM_CODE,CODE_ID,CODE,LANG_KND,CODE_NAME,CODE_TAG1,REMARK )
+			VALUES ( 'PT','118',#code#,'ko',#codeName#,'0',#remark# )
+		]]>
+	</insert>
+	
+	<update id="grade.update">
+		<![CDATA[
+			UPDATE CODEBASE
+			SET CODE=#code#,CODE_NAME=#codeName#,REMARK=#remark#
+			WHERE 1=1 
+				AND CODE=#code#
+			UPDATE CODEBASE
+			SET CODE_NAME=#codeName#,REMARK=#remark#
+			WHERE 1=1 
+				AND SYSTEM_CODE='PT'
+				AND CODE_ID='118'
+				AND CODE=#code#
+				AND LANG_KND='ko'
+		]]>
+	</update>
+	
+	<delete id="grade.delete">
+		<![CDATA[
+			DELETE FROM CODEBASE
+			WHERE 1=1 
+				AND SYSTEM_CODE='PT'
+				AND CODE_ID='118'
+				AND CODE=#code#
+				AND LANG_KND='ko'
+		]]>
+	</delete>
+	
+	<update id="grade.changeOrder">
+		<![CDATA[
+			UPDATE CODEBASE
+			SET CODE_TAG1=#sortOrder#
+			WHERE 1=1 
+				AND SYSTEM_CODE='PT'
+				AND CODE_ID='118'
+				AND CODE=#code#
+				AND LANG_KND='ko'
+		]]>
+	</update>
+	
+	<select id="securityPrincipal.existParent" resultClass="int">
+			SELECT COUNT(*) cnt
+			FROM SECURITY_PRINCIPAL
+			WHERE 1=1 AND PRINCIPAL_TYPE='R' AND PRINCIPAL_ID=14
+	</select>
+	
+	<select id="securityPrincipal.exist" resultClass="int">
+			SELECT COUNT(*) cnt
+			FROM SECURITY_PRINCIPAL
+			WHERE 1=1 AND PRINCIPAL_TYPE='R' AND PARENT_ID=14 AND SHORT_PATH=#code#
+	</select>
+	
+	<insert id="securityPrincipal.insertParent">
+		<![CDATA[
+			INSERT INTO SECURITY_PRINCIPAL
+				( PARENT_ID,PRINCIPAL_ID,SHORT_PATH,FULL_PATH,PRINCIPAL_NAME,IS_MAPPING_ONLY,IS_ENABLED,PRINCIPAL_TYPE,CLASSNAME,CREATION_DATE,MODIFIED_DATE )
+			VALUES ( 10,14,'common_grade','/role/common_grade','공통등급',0,1,'R','com.saltware.enview.security.InternalRolePrincipalImpl',SYSDATE,SYSDATE )
+		]]>
+	</insert>
+	
+	<insert id="securityPrincipal.insert">
+		<![CDATA[
+			INSERT INTO SECURITY_PRINCIPAL
+				( PARENT_ID,PRINCIPAL_ID,SHORT_PATH,FULL_PATH,PRINCIPAL_NAME,IS_MAPPING_ONLY,IS_ENABLED,PRINCIPAL_TYPE,CLASSNAME,PRINCIPAL_DESC,CREATION_DATE,MODIFIED_DATE )
+			VALUES ( 14,#principalId#,#code#,'/role/'||#code#,#codeName#,0,1,'R','com.saltware.enview.security.InternalRolePrincipalImpl',#remark#,SYSDATE,SYSDATE )
+		]]>
+	</insert>
+	
+	<update id="securityPrincipal.update">
+		<![CDATA[
+			UPDATE SECURITY_PRINCIPAL
+			SET SHORT_PATH=#code#,PRINCIPAL_NAME=#codeName#,MODIFIED_DATE=SYSDATE,PRINCIPAL_DESC=#remark#
+			WHERE PRINCIPAL_TYPE='R' AND PARENT_ID=14 AND SHORT_PATH=#code#
+		]]>
+	</update>
+	
+	<delete id="securityPrincipal.deleteSecurityPermission">
+		<![CDATA[
+			DELETE FROM SECURITY_PERMISSION
+			WHERE PRINCIPAL_ID=(SELECT PRINCIPAL_ID FROM SECURITY_PRINCIPAL WHERE PRINCIPAL_TYPE='R' AND PARENT_ID=14 AND SHORT_PATH=#code#)
+		]]>
+	</delete>
+	
+	<delete id="securityPrincipal.deleteUserRole">
+		<![CDATA[
+			DELETE FROM SECURITY_USER_ROLE
+			WHERE ROLE_ID=(SELECT PRINCIPAL_ID FROM SECURITY_PRINCIPAL WHERE PRINCIPAL_TYPE='R' AND PARENT_ID=14 AND SHORT_PATH=#code#)
+		]]>
+	</delete>
+	
+	<delete id="securityPrincipal.delete">
+		<![CDATA[
+			DELETE FROM SECURITY_PRINCIPAL
+			WHERE PRINCIPAL_TYPE='R' AND PARENT_ID=14 AND SHORT_PATH=#code#
+		]]>
+	</delete>
+	
+	<update id="securityPrincipal.updateUserpass">
+		<![CDATA[
+			UPDATE USERPASS SET GRADE_CD='' 
+			WHERE GRADE_CD=#code#
+		]]>
+	</update>
+
+</sqlMap>
+

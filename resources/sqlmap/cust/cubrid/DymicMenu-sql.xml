@@ -1,0 +1,115 @@
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+	
+<sqlMap namespace="cust">
+
+	
+	
+	<!-- Query for [ DYMIC_MENU : 동적메뉴관리 ] Table -->
+	<resultMap id="cust_DymicMenuVO_PK" class="org.tok.cust.admin.dymicMenu.service.DymicMenuPK">
+	
+		<result property="menuId" column="MENU_ID" columnIndex="1"/>	
+	</resultMap>
+	
+	<resultMap id="cust_DymicMenuVO" class="org.tok.cust.admin.dymicMenu.service.DymicMenuVO">
+	 
+		<result property="menuName" column="MENU_NAME" columnIndex="1"/>	 
+		<result property="menuId" column="MENU_ID" columnIndex="2"/>	 
+		<result property="desc" column="DESC" columnIndex="3"/>	 
+		<result property="sortOrder" column="SORT_ORDER" columnIndex="4"/>	 
+		<result property="applyFeed" column="APPLY_FEED" columnIndex="5"/>	 
+		<result property="writeAuth" column="WRITE_AUTH" columnIndex="6"/>	 
+		<result property="readAuth" column="READ_AUTH" columnIndex="7"/>	 
+		<result property="url" column="URL" columnIndex="8"/>	 
+		<result property="isService" column="IS_SERVICE" columnIndex="9"/>	
+	</resultMap>
+	
+	<select id="dymicMenu.totalCount" resultClass="int">
+
+			SELECT COUNT(*) totcnt
+			FROM DYMIC_MENU
+			WHERE 1=1	
+					<isNotNull  prepend=" AND " property="titleCond">MENU_NAME LIKE nvl(#titleCond#,'%')||'%'</isNotNull>
+	</select>
+	
+	<select id="dymicMenu.findByPage" resultMap="cust_DymicMenuVO_PK">
+			<!--
+			SELECT tb.* FROM ( 
+				
+				SELECT <isNotNull property="sortColumn">ROW_NUMBER() OVER(ORDER BY $sortColumn$ $sortMethod$) as rnum, </isNotNull><isNull property="sortColumn">rownum rnum, </isNull>MENU_ID 
+				FROM DYMIC_MENU 
+				WHERE rownum &lt;= #endRow# 
+					<isNotNull  prepend=" AND " property="titleCond">TITLE LIKE nvl(#titleCond#,'%')||'%'</isNotNull>
+			) tb WHERE tb.rnum BETWEEN #startRow# AND #endRow#
+			-->
+			SELECT tb2.* FROM (
+				SELECT tb1.*, rownum rnum FROM (
+					SELECT MENU_ID
+					FROM DYMIC_MENU
+					WHERE 1=1 
+					<isNotNull  prepend=" AND " property="titleCond">MENU_NAME LIKE nvl(#titleCond#,'%')||'%'</isNotNull>
+					<isNotNull property="sortColumn"> ORDER BY "$sortColumn$" $sortMethod$ </isNotNull>
+					<isNull property="sortColumn"> ORDER BY SORT_ORDER ASC </isNull>
+				) tb1
+			) tb2 WHERE tb2.rnum BETWEEN #startRow# AND #endRow#
+			
+	</select>
+
+	<select id="dymicMenu.findAll" resultMap="cust_DymicMenuVO">
+			SELECT MENU_NAME,MENU_ID,"DESC",SORT_ORDER,APPLY_FEED,WRITE_AUTH,READ_AUTH,URL,IS_SERVICE
+			FROM DYMIC_MENU
+			ORDER BY SORT_ORDER ASC
+	</select>
+	
+
+	<select id="dymicMenu.detail" resultMap="cust_DymicMenuVO">
+		<![CDATA[
+			SELECT MENU_NAME,MENU_ID,"DESC",SORT_ORDER,APPLY_FEED,WRITE_AUTH,READ_AUTH,URL,IS_SERVICE
+			FROM DYMIC_MENU
+			WHERE 1=1 
+				AND MENU_ID=#menuId#
+		]]>
+	</select>
+	
+	<select id="dymicMenu.exist" resultClass="int">
+			SELECT COUNT(*) cnt
+			FROM DYMIC_MENU
+			WHERE 1=1 
+				AND MENU_ID=#menuId#
+	</select>
+	
+	<insert id="dymicMenu.insert">
+		<![CDATA[
+			INSERT INTO DYMIC_MENU
+				( MENU_NAME,MENU_ID,"DESC",SORT_ORDER,APPLY_FEED,WRITE_AUTH,READ_AUTH,URL,IS_SERVICE )
+			VALUES ( #menuName#,#menuId#,#desc#,(SELECT count(MENU_ID) FROM DYMIC_MENU),#applyFeed#,#writeAuth#,#readAuth#,#url#,#isService# )
+		]]>
+	</insert>
+	
+	<update id="dymicMenu.update">
+		<![CDATA[
+			UPDATE DYMIC_MENU
+			SET MENU_NAME=#menuName#,MENU_ID=#menuId#,"DESC"=#desc#,APPLY_FEED=#applyFeed#,WRITE_AUTH=#writeAuth#,READ_AUTH=#readAuth#,URL=#url#,IS_SERVICE=#isService#
+			WHERE 1=1 
+				AND MENU_ID=#menuId#
+		]]>
+	</update>
+	
+	<delete id="dymicMenu.delete">
+		<![CDATA[
+			DELETE FROM DYMIC_MENU
+			WHERE 1=1 
+				AND MENU_ID=#menuId#
+		]]>
+	</delete>
+	
+	<update id="dymicMenu.changeTreeOrder">
+		<![CDATA[
+			UPDATE DYMIC_MENU
+			SET SORT_ORDER=#sortOrder#
+			WHERE MENU_ID=#menuId#
+		]]>
+	</update>
+	
+
+</sqlMap>
+

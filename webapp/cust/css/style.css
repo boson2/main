@@ -1,0 +1,1473 @@
+@import url(base.css);
+@import url(common.css);
+@import url(header.css);
+@import url(menu.css);
+body {
+    background: #c6cee1;
+    margin: 0;
+    line-height: 120%;
+    -ms-text-size-adjust: none;
+    -webkit-transition-property: height, min-height;
+    -webkit-transition-duration: .1s;
+    -webkit-transition-timing-function: ease;
+    -webkit-text-size-adjust: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    overflow-x: hidden;
+}
+
+#page {
+    position: relative;
+    height: 100%;
+}
+
+#contents {
+    height: 100%;
+}
+
+/* news_feed */
+#news {
+    border-top: 1px solid white;
+    position: relative;
+    height: 49px;
+    background: url(../images/bg_title.png);
+    overflow: hidden;
+}
+
+#news p {
+    padding: 16px 14px 14px 14px;
+    margin-left: 14px;
+    font-size: 15px;
+    color: #333333;
+    position: relative;
+}
+
+#news p.btn_title {
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    height: 42px;
+    margin-top: 3px;
+    padding: 0;
+    width: 15%;
+    border-left: 1px solid #babbbf;
+    background: url(../images/btn_newspeed.png) center no-repeat;
+}
+
+#news p.title a {
+    font-size: 15px;
+    color: #333333;
+}
+
+#news p.title {
+    width: 70%;
+    float: left;
+}
+
+.content-item {
+    padding: 10px 10px 4px 10px;
+}
+
+.content-item .content-item-wrap {
+    background: white;
+    padding: 10px 0px 40px 0px;
+    position: relative;
+    border-bottom: 1px solid #9a9ea9;
+}
+
+.content-item .content-item-wrap .content-subj-wrap {
+    width: 81%;
+    float: left;
+    margin-left: 7px;
+}
+
+.content-item .content-user-photo {
+    padding-left: 9px;
+    float: left;
+    cursor: pointer;
+}
+
+.content-item .content-title {
+    padding: 3px 2px 3px 2px;
+    margin-bottom: 5px;
+    font-size: 15px;
+    color: #333333;
+}
+
+.content-item .content-subject {
+    padding: 3px 2px 3px 2px;
+    color: #000000;
+    font-size: 14px;
+    line-height: 140%;
+}
+
+.content-item .content-subject a {
+    color: #1f37b1;
+    font-size: inherit;
+}
+
+.content-item .content-type {
+    margin-bottom: 4px;
+    color: #555555;
+    font-size: 11px;
+}
+
+.content-article {
+    clear: both;
+    overflow: hidden;
+    padding: 8px;
+}
+
+.content-item .content-type .content-reg-time {
+    float: right;
+}
+
+.content-item .content-reg {
+    overflow: hidden;
+}
+
+.content-item .content-reg span {
+    font-size: 13px;
+}
+
+.content-item .content-reg .content-reg-user {
+    float: left;
+    color: #145e9f;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+.content-item .content-reg .content-reg-time {
+    position: relative;
+    float: right;
+    color: #737373;
+}
+.content-more{
+    color: #377aa6;
+}
+.content-item .content-photo img {
+    left: -1%;
+    width: 102%;
+    position: relative;
+    top: 10px;
+}
+
+.content-item .content-comment {
+    background: #eeeff4;
+    overflow: hidden;
+    color: #586592;
+    font-size: 10px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+.content-item .content-comment p {
+    padding: 8px;
+}
+
+.content-item .content-comment-one {
+    float: left;
+}
+
+.content-item .content-comment-one span {
+    cursor: pointer;
+    display: inline-block;
+    font-size: 13px;
+}
+
+.content-item .content-comment-one span.content-comment-like {
+    margin-right: 6px;
+}
+
+.content-item .content-comment-one span.content-comment-reply {
+    margin-left: 8px;
+}
+
+.content-item .content-comment-two {
+    float: right;
+}
+
+.content-item .content-comment-two span {
+    padding-left: 19px;
+    display: inline-block;
+}
+
+span.content-comment-tv {
+    background: url(../images/ic_tv_star.png) left 1px no-repeat;
+}
+
+span.content-comment-star {
+    background: url(../images/ic_tv_star.png) -40px 0px no-repeat;
+    margin-left: 10px;
+    margin-right: 14px;
+}
+
+i.tv {
+}
+
+i.star {
+    vertical-align: sub;
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background: url(../images/ic_tv_star.png) -42px 0px no-repeat;
+}
+
+/* news_feed_detail */
+#content-detail {
+    padding-bottom: 50px;
+}
+
+#content-detail .content-subj-wrap-detail {
+    padding: 2px 8px 8px 8px;
+}
+
+#content-detail .content-item {
+    padding: 6px 10px 6px 10px;
+}
+
+#content-detail .content-item .content-item-wrap .content-subject {
+    line-height: 20px;
+}
+
+#content-detail .content-item .content-item-wrap .content-title {
+    font-size: 16px;
+    padding: 15px 0;
+}
+
+#content-detail .content-item .content-item-wrap .content-subject p {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+#content-detail .content-item .content-item-wrap .content-user-photo {
+    margin-right: 5px;
+}
+
+#content-reply-form {
+    border-top: 1px solid #e4e6ea;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: white;
+    padding: 6px;
+}
+
+#content-reply-form textarea {
+    width: 80%;
+    padding: 7px;
+    float: left;
+    -webkit-appearance: none;
+    background: transparent;
+    border: none;
+    -webkit-box-sizing: border-box;
+    display: block;
+    letter-spacing: 0;
+    -webkit-line-break: after-white-space;
+    line-height: 148%;
+    margin: 0;
+    -webkit-nbsp-mode: space;
+    overflow: hidden;
+    overflow-y: auto;
+    position: relative;
+    resize: none;
+    text-indent: 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+#content-reply-form input {
+    width: 19%;
+    padding: 7px 0px 7px 5px;
+    background: white;
+    border-bottom: 0;
+    border-right: 0;
+    border-top: 0;
+    border-left: 2px solid #a2a3a3;
+    color: #666666;
+    font-weight: bold;
+}
+
+#content-detail .content-item .content-detail-like-count {
+    padding: 10px;
+    background: #edeff4;
+    position: relative;
+    top: -1px;
+    color: #555;
+}
+
+#content-detail .content-item .content-detail-like-count .like {
+    float: right;
+    display: inline-block;
+    color: #0e6198;
+    margin-right: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#content-detail .content-item .content-detail-like-count strong {
+    color: #0e6198;
+    font-weight: bold;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+#content-detail .content-item .content-detail-comment {
+    background: #edeff4;
+    position: relative;
+    top: -1px;
+    overflow: hidden;
+    padding: 10px;
+    border-top: 1px solid #ffffff;
+}
+
+#content-detail .content-item .content-detail-comment dt {
+    float: left;
+}
+
+#content-detail .content-item .content-detail-comment dt .content-detail-comment-user-photo img {
+    width: 40px;
+    height: 38px;
+    padding: 5px;
+}
+
+#content-detail .content-item .content-detail-comment dd {
+    float: left;
+    width: 80%;
+    color: #555555;
+}
+
+#content-detail .content-item .content-detail-comment dd p {
+    line-height: 140%;
+    font-size: 13px;
+}
+
+#content-detail .content-item .content-detail-comment dd .content-detail-comment-user-name {
+    color: #0e6198;
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+#content-detail .content-item .content-detail-comment dd .content-detail-comment-user-comment {
+    margin-bottom: 2px;
+    font-size: 12px;
+}
+
+#content-detail .content-item .content-detail-comment dd .content-detail-comment-regdate {
+    float: right;
+    font-size: 12px;
+    color: #555;
+    font-weight: normal;
+}
+
+#content-detail .content-item .content-detail-comment dd .content-detail-comment-like-box {
+    float: left;
+    margin-left: 30px;
+    font-weight: bold;
+    color: #175984;
+}
+
+#content-detail .content-item .content-detail-comment dd .content-detail-comment-like-box span {
+    font-size: 12px;
+}
+
+#content-detail .content-item .content-detail-comment dd .content-detail-comment-like-box .content-detail-comment-cancel {
+    margin-right: 5px;
+    margin-left: 2px;
+}
+
+#content-detail .content-item .content-detail-comment dd .content-detail-comment-like-box .content-detail-comment-like-count i {
+    margin-right: 5px;
+}
+
+/* my-gallery */
+/* my-gallery */
+#content-my-gallery header {
+    padding-top: 211px;
+}
+
+#content-my-gallery #my-gallery-image {
+    background: #c6cee1;
+    position: absolute;
+    width: 100%;
+    top: 51px;
+    z-index: -1;
+}
+
+#content-my-gallery #my-gallery-image img {
+    height: 215px;
+    width: 100%;
+}
+
+#content-my-gallery #my-gallery-wrap {
+    height: 40px;
+    background: url(../images/bg_mygallery_header.png);
+    border-bottom: 1px solid #bdc0c9;
+    border-top: 2px solid #163961;
+}
+
+#content-my-gallery dt {
+    font-weight: bold;
+}
+
+#content-my-gallery dt, #content-my-gallery dd {
+    font-size: 11px;
+    float: left;
+}
+
+#content-my-gallery dl {
+    width: 42%;
+    float: left;
+    position: relative;
+    padding: 5px 7px 5px 90px;
+}
+
+#content-my-gallery dl .my-gallery-userimage {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    left: 8px;
+    bottom: 0;
+}
+
+#content-my-gallery dl .my-gallery-userimage img {
+    position: absolute;
+    left: 2px;
+    width: 75px;
+    height: 80px;
+    bottom: 0;
+}
+
+#content-my-gallery header nav {
+    border-top: 1px solid #163961;
+    position: relative;
+    top: -1px;
+    overflow: hidden;
+    height: inherit;
+}
+
+#content-my-gallery header nav ul {
+    float: left;
+    height: inherit;
+    width: 100%;
+}
+
+#content-my-gallery header nav ul li {
+    height: inherit;
+    width: 33.3%;
+    float: left;
+    text-align: center;
+}
+
+#content-my-gallery header nav ul li a {
+    margin-top: 14px;
+    color: #555555;
+    font-weight: bold;
+    display: block;
+    font-size: 11px;
+}
+
+#content-my-gallery header nav ul li a img {
+    vertical-align: top;
+    width: 11px;
+    margin-right: 3px;
+}
+
+#content-my-gallery article {
+    background: white;
+    overflow: hidden;
+    padding: 5px 2px 53px 2px;
+}
+
+#content-my-gallery article ul li {
+    display: inline-block;
+    float: left;
+    width: 24.8%;
+    margin-right: 1px;
+    margin-bottom: -3px;
+}
+
+#content-my-gallery article ul li a img {
+    width: 100%;
+    height: inherit;
+}
+
+#content-my-gallery footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+    background: #5f89bb;
+}
+
+#content-my-gallery footer nav ul li {
+    text-align: center;
+    float: left;
+    width: 33.1%;
+    border-right: 1px solid white;
+    background: #5f89bb;
+    padding: 10px 0;
+}
+
+#content-my-gallery footer nav ul li:last-child {
+    border-right: none;
+}
+
+#content-my-gallery footer nav ul li a {
+    font-size: 14px;
+    color: white;
+    font-weight: bold;
+    display: block;
+}
+
+/* 프로필,소그룹 공통*/
+#wr_title {
+    border-top: 1px solid white;
+    position: relative;
+    height: 49px;
+    background: #eeeff4;
+    overflow: hidden;
+    box-shadow: 1px 1px 1px #999da9;
+    -webkit-box-shadow: 1px 1px 1px #999da9;
+    -moz-box-shadow: 1px 1px 1px #999da9;
+    -o-box-shadow: 1px 1px 1px #999da9;
+}
+
+#wr_title p.title {
+    padding: 16px 14px 14px 14px;
+    margin-left: 14px;
+    font-size: 15px;
+    color: #666;
+    position: relative;
+    width: 70%;
+    float: left;
+}
+
+#wr_title p.title2 {
+    padding: 16px 14px 14px 14px;
+    margin-left: 14px;
+    font-size: 15px;
+	text-align:center;
+    color: #666;
+    position: relative;
+    width: 90%;
+    float: left;
+}
+/* 소그룹 만들기*/
+.write-box {
+    padding: 20px 20px 60px 20px;
+    overflow: hidden;
+}
+
+.write-box dt, .write-box dd {
+    padding: 10px;
+    margin: 3px 0;
+}
+
+.write-box dt {
+    font-weight: bold;
+    font-size: 14px;
+    clear: both;
+}
+
+.write-box dd {
+    background: white;
+    float: left;
+    width: 60%;
+    border-radius: 4px;
+    border: 1px solid #b9baba;
+}
+
+.write-box dd.address2 {
+    background: none;
+    border: none;
+	padding: 5px 1px 1px 1px;
+	margin: 0;
+}
+
+.write-box dd.user-photo {
+    background: none;
+    border: none;
+	margin: 0;
+}
+
+.write-box dd.user-photo img {
+    position: relative;
+    left: -10px;
+    border: 1px solid #b9baba;
+
+}
+.write-box dd .btn-user-set { 
+    padding: 8px 7px;    
+    background: #fff;
+    border: 1px solid #d8d8d9;
+    color: #000;
+    font-size: 12px;
+    border-radius: 4px;
+    font-weight: bold;
+
+	}
+.write-box dd input[type = text], .write-box dd textarea {
+    width: 95%;
+    padding: 5px;
+    border: 0;
+}
+
+.write-box dd input[type = radio] {
+    margin: 0 5px;
+}
+
+.write-box dd select {
+}
+
+.write-box dl dt {
+    width: 25%;
+    float: left;
+}
+
+.write-box footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #edeff4;
+}
+
+.write-box footer input {
+    width: 43%;
+    padding: 10px;
+    background: #5974a5;
+    border: 0;
+    border-radius: 4px;
+    color: white;
+}
+
+.write-box footer .content-make-group-btn-box {
+    padding: 8px;
+    margin: 0px auto;
+	
+}
+
+.write-box footer .content-make-group-btn-box #btn-make-group-submit {
+    margin-left: 5%;
+	font-weight: bold;
+
+}
+
+.write-box footer .content-make-group-btn-box #btn-make-group-cancel {
+    margin-left: 2%;
+	font-weight: bold;
+}
+
+/* 좋아요 리스트 */
+.like-list {
+    padding: 10px;
+}
+
+.like-list ul {
+    padding: 0px 10px 10px 10px;
+    background: #fff;
+}
+
+.like-list ul li {
+    cursor: pointer;
+    clear: both;
+    overflow: hidden;
+    border-bottom: 1px solid #dedfe4;
+    padding: 5px 0;
+    background: url(../images/ic_right_arrow.png) right center no-repeat;
+}
+
+.like-list ul li div {
+    float: left;
+}
+
+.like-list ul li .user-photo {
+    width: 15%;
+}
+
+.like-list ul li .user-name {
+    width: 84%;
+    margin-top: 15px;
+    font-weight: bold;
+    color: #12588b;
+}
+
+/* 그룹 회원 리스트 */
+.member-list {
+    padding: 10px;
+    height: 100%;
+}
+
+.member-list ul {
+    padding: 0px 10px 10px 10px;
+    background: #fff;
+    height: 98%;
+}
+
+.member-list ul li {
+    cursor: pointer;
+    clear: both;
+    overflow: hidden;
+    border-bottom: 1px solid #dedfe4;
+    padding: 5px 0;
+}
+
+.member-list ul li div {
+    float: left;
+}
+
+.member-list ul li .user-photo {
+    width: 15%;
+}
+
+.member-list ul li .user-name {
+    width: 84%;
+    margin-top: 3px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #12588b;
+}
+
+.member-list ul li .btn-user-type {
+    float: right;
+    margin-right: 2px;
+}
+
+.member-list ul li .btn-user-type a {
+    display: block;
+    padding: 3px 7px;;
+    background: #f1f4f9;
+    margin-top: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: #44475d;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+/* 글쓰기 대상 선택*/
+#select-target {
+    padding: 10px;
+}
+
+#select-target ul {
+    background: white;
+}
+
+#select-target h3 {
+    text-indent: 0;
+    padding: 5px 25px;
+    background: #edeff4;
+    font-size: 13px;
+    font-weight: bold;
+    color: #0e6198;
+    border-bottom: 1px solid #eef0f5;
+}
+
+#select-target ul li ul li {
+    padding: 5px 25px;
+    border-bottom: 1px solid #eef0f5;
+}
+
+#select-target ul li ul li a {
+    display: block;
+    color: #666666;
+}
+
+/* 뉴스 피드 글 작성*/
+#btn_feed_write {
+    position: absolute;
+    right: 12px;
+    top: 15px;
+    padding: 2px 10px;
+    border: 1px solid #97aac1;
+    border-radius: 3px;
+    color: #d4d4d4;
+    cursor: pointer;
+	font-weight: bold;
+}
+
+.news_feed_write{
+	padding:10px;
+}
+.news_feed_write #news_feed_write_wrap {
+    background: white;
+    padding: 10px;
+}
+
+.news_feed_write .title {
+    padding: 5px 0;
+    font-size: 13px;
+    font-weight: bold;
+    color: #0E6198;
+    border-bottom: 2px solid #EEF0F5;
+}
+
+.news_feed_write form {
+    margin-top: 5px;
+}
+
+.news_feed_write form textarea {
+    background: white;
+    border: 0;
+    width: 100%;
+}
+
+#news_feed_add_other {
+    border-top: 1px solid #E4E6EA;
+    position: fixed;
+	left:0;
+    bottom: 0;
+    width: 100%;
+    background: white;
+	background:#eeeff5;
+}
+#news_feed_add_other input{
+	margin-left:10px;
+}
+
+/* 소그룹 스타일 */
+.group-feed #wr_title {
+    padding: 10px 20px;
+    height: 29px;
+}
+
+.group-feed #wr_title dl {
+    overflow: hidden;
+    float: left;
+    width: 60%;
+    color: #1a66a2;
+}
+
+.group-feed #wr_title p {
+    float: left;
+    width: 40%;
+}
+
+.group-feed #wr_title .group-feed-photo {
+    float: left;
+    height: inherit;
+    position: relative;
+    top: -4px;
+    margin-right: 5px;
+}
+
+.group-feed #wr_title .group-feed-groupnm {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.group-feed #wr_title .group-feed-admin {
+    float: left;
+}
+
+.group-feed #wr_title .group-feed-nm {
+    font-weight: bold;
+}
+
+.group-feed #wr_title p.btn_feed_write {
+    width: 30px;
+    height: 29px;
+    float: right;
+    padding-left: 25px;
+    border-left: 1px solid #d9d9e1;
+}
+
+/* 소그룹 갤러리 */
+#content-gallery-nav .content-gallery-cont {
+    margin: 10px;
+    background: white;
+}
+
+#content-gallery-nav .content-gallery-cont .content-photo img {
+    width: 100%;
+}
+
+/* 소그룹 리스트 */
+.group-feed.padding10 #wr_title {
+    padding: 10px;
+}
+
+.group-feed #wr_title #search_text {
+    width: 85%;
+    float: left;
+}
+
+.group-feed #wr_title #search_text input {
+    display: block;
+    width: 90%;
+    border: 1px solid #b9baba;
+    padding: 8px 5px;
+    border-radius: 4px;
+}
+
+.group-feed #wr_title #btn_search {
+    width: 15%;
+    float: left;
+}
+
+/* 이벤트 리스트 */
+section.member-list.event ul li {
+    background: url(images/ic_right_arrow.png) right no-repeat;
+}
+
+section.foot-box {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: #125687;
+}
+
+section.foot-box li.one {
+    border-right: 1px solid white;
+}
+
+section.foot-box li {
+    float: left;
+    width: 49.5%;
+    text-align: center;
+}
+
+section.foot-box li a {
+    color: white;
+    font-weight: bold;
+    display: block;
+    padding: 10px;
+    background: #125687;
+}
+
+section.foot-box li a:hover, section.foot-box li a.on {
+    background: #5f89bb;
+}
+
+/* 이벤트 상세보기 */
+.event-detail {
+    padding: 10px;
+}
+
+.event-detail h3 {
+    text-indent: 0;
+}
+
+.event-detail section {
+    background: white;
+    font-size: 14px;
+}
+
+.event-detail section .user {
+    overflow: hidden;
+    padding: 10px 10px 0 10px;
+    color: #666666;
+}
+
+.event-detail section .user p a {
+    padding: 2px 8px;
+    display: inline-block;
+    background: #f1f4f9;
+    border: 1px solid #d8d8d9;
+    color: #44475d;
+    font-size: 12px;
+    border-radius: 4px;
+    font-weight: bold;
+    position: relative;
+    left: 15px;
+    margin-top: 5px;
+}
+
+.event-detail section .user-middle {
+    padding: 0px 10px 10x 10px;
+}
+
+.event-detail section .user-middle dl {
+    overflow: hidden;
+}
+
+.event-detail section .user-middle dt {
+    color: #0e6198;
+    font-weight: bold;
+    text-align: right;
+    float: left;
+    width: 20%;
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+.event-detail section .user-middle dd {
+    width: 80%;
+    float: left;
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+.event-detail section .user-middle dd p {
+    margin-left: 10px;
+}
+
+.event-detail section .user-middle > p {
+    text-align: center;
+    clear: both;
+    margin-top: 10px;
+    padding-bottom: 10px;
+}
+
+.event-detail section .user-middle > p a {
+    padding: 6px 12px;
+    display: inline-block;
+    background: #f1f4f9;
+    border: 1px solid #d8d8d9;
+    color: #44475d;
+    font-size: 12px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.event-detail section .user .user-photo {
+    float: left;
+    margin-right: 8px;
+}
+
+.event-detail section .user .user-r {
+    font-size: 13px;
+}
+
+.event-detail section .user .user-r h3 {
+    font-size: 15px;
+    font-weight: bold;
+    color: #0e6198;
+    margin-bottom: 5px;
+}
+
+.event-detail section .user .user-r ul li {
+    list-style: disc;
+    position: relative;
+    left: 15px;
+}
+
+.event-detail section .user-board-cont {
+    background: #edeff4;
+}
+
+.event-detail section .user-board-cont h3 {
+    color: #0e6198;
+    font-weight: bold;
+    border-bottom: 1px solid white;
+    padding: 10px;
+}
+
+.event-detail section .user-board-cont ul {
+    padding: 10px;
+    overflow: hidden;
+    margin-top: 10px;
+    font-size: 13px;
+}
+
+.event-detail section .user-board-cont ul li {
+    border-bottom: 1px solid white;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.event-detail section .user-board-cont ul li > p {
+    clear: both;
+    margin-top: 5px;
+    background: white;
+    padding: 5px 0 5px 15%;
+    color: #175984;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.event-detail section .user-board-cont dl {
+    overflow: hidden;
+}
+
+.event-detail section .user-board-cont dt {
+    float: left;
+    width: 15%;
+}
+
+.event-detail section .user-board-cont dd {
+    width: 80%;
+}
+
+.event-detail section .user-board-cont dd.photo {
+    float: left;
+}
+
+.event-detail section .user-board-cont dd strong {
+    color: #175984;
+    font-weight: bold;
+}
+
+.event-detail section .user-board-cont dd.photo img {
+}
+
+.event-detail section .user-board-cont dd p {
+    margin-bottom: 5px;
+}
+
+#foot-nav {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+}
+
+#foot-nav ul {
+    border-top: 1px solid white;
+}
+
+#foot-nav ul li {
+    float: left;
+    width: 50%;
+    text-align: center;
+}
+
+#foot-nav ul li a {
+    display: block;
+    padding: 10px 0;
+    background: #125687;
+    color: white;
+    font-weight: bold;
+}
+
+#foot-nav ul li:first-child a {
+    border-right: 1px solid white;
+}
+
+#foot-nav ul li:first-child a.on {
+    background: #5f89bb;
+}
+
+/* 버튼있는 서브 타이틀 스타일*/
+.two-box {
+    padding: 10px;
+    overflow: hidden;
+}
+
+.two-box p {
+}
+
+.two-box p.ti {
+    width: 80%;
+    float: left;
+    color: #0e6198;
+    font-size: 14px;
+    font-weight: bold
+}
+
+.two-box p.ti span {
+    display: block;
+    padding: 7px 0 7px 10px;
+    border-right: 1px solid #d9d9e1;
+}
+
+.two-box p.tb {
+    width: 20%;
+    float: left;
+}
+
+.two-box p a {
+    border: 1px solid #bdc0c9;
+    border-radius: 4px;
+    text-align: center;
+    margin-left: 10px;
+    display: block;
+    padding: 5px 0;
+    color: #555;
+    font-weight: bold;
+}
+
+/* 채팅 목록 */
+.chat-box {
+    padding: 10px;
+}
+
+.chat ul {
+    padding: 10px;
+    background: white;
+}
+
+.chat ul li {
+    border-bottom: 1px solid #dedfe4;
+    margin-bottom: 10px;
+}
+
+.chat ul li .user-box {
+}
+
+.chat ul li .user-box img {
+    float: left;
+    margin-right: 10px;
+}
+
+.chat ul li .user-box p.reg-date {
+    float: right;
+}
+
+.chat ul li .user-box p.user-name {
+    clear: right;
+    position: relative;
+    top: 8px;
+    color: #0e6198;
+    font-weight: bold;
+}
+
+.chat ul li .user-box-cont {
+    padding-top: 5px;
+    clear: both;
+    margin: 5px 0;
+}
+
+/* 하단 3컬럼 네비 */
+.foot-nav-3colunm {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+	font-weight: bold;
+}
+
+.foot-nav-3colunm ul li {
+    float: left;
+    width: 33%;
+    text-align: center;
+}
+
+.foot-nav-3colunm ul li:last-child {
+    width: 34%;
+}
+
+.foot-nav-3colunm ul li:last-child a {
+    border-right: 0;
+}
+
+.foot-nav-3colunm ul li a {
+    display: block;
+    border-right: 1px solid gray;
+    padding: 10px;
+    background: #125687;
+    color: white;
+}
+
+.foot-nav-3colunm ul li.on a {
+    background: #5f89bb;
+}
+
+/* 채팅 상세 */
+.chat-box-detail {
+    padding: 50px 10px 10px 10px;
+    overflow: hidden;
+    height: 100%;
+    background: url(../images/bg_chat.png);
+}
+
+.chat-box-detail ul li {
+    clear: both;
+    margin-bottom: 30px;
+    position: relative;
+    float: left;
+    width: 100%;
+}
+
+.chat-box-detail ul li.one span.time {
+    display: inline-block;
+    position: absolute;
+    top: -20px;
+    right: 0;
+}
+
+.chat-box-detail ul li.two span.time {
+    display: inline-block;
+    position: absolute;
+    top: 0px;
+    left: 100px;
+}
+
+.chat-box-detail ul li.two span.name {
+    display: inline-block;
+    position: absolute;
+    top: 0px;
+    left: 50px;
+}
+
+.chat-box-detail ul li p {
+    border-radius: 15px;
+}
+
+.chat-box-detail ul li.one p {
+    float: right;
+    width: 45%;
+    background: #f4ed73;
+    padding: 10px;
+}
+
+.chat-box-detail ul li.one .ri {
+    display: inline-block;
+    width: 12px;
+    height: 18px;
+    background: url(../images/ic_chat_right_arrow.png) center;
+    position: absolute;
+    right: -10px;
+    top: 2px;
+}
+
+.chat-box-detail ul li.two .li {
+    display: inline-block;
+    width: 10px;
+    height: 11px;
+    background: url(../images/ic_chat_left_arrow.png) center;
+    position: absolute;
+    left: 50px;
+}
+
+.chat-box-detail ul li.two {
+    padding-left: 60px;
+    padding-top: 20px;
+    background: url(../images/ic_default_user_big.png) left top no-repeat;
+    background-size: 40px 40px;
+}
+
+.chat-box-detail ul li.two p {
+    float: left;
+    width: 45%;
+    background: #fff;
+    padding: 10px;
+}
+.chat-box-detail ul li.day {
+ 
+    width: 98%;
+    height: 11px;
+    background: #5974a5;
+    padding: 8px 10px 12px 10px ;
+	color: #fff;
+    font-size: 13px;
+    font-weight: normal;
+	text-align: center;
+}
+
+.chat-box-detail #chat-form {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+}
+
+.chat-box-detail #chat-form form {
+    padding: 10px;
+    width: 100%;
+    overflow: hidden;
+    background: #edeff4;
+}
+
+.chat-box-detail #chat-form p {
+    float: left;
+}
+
+.chat-box-detail #chat-form input {
+    border: 1px solid #b9baba;
+    border-radius: 4px;
+}
+
+.chat-box-detail #chat-form p#chat-cont {
+    width: 70%;
+}
+
+.chat-box-detail #chat-form p#chat-cont input {
+    padding: 10px;
+    width: 90%;
+}
+
+.chat-box-detail #chat-form p#chat-add {
+    width: 10%;
+
+}
+
+.chat-box-detail #chat-form p#chat-add input {
+    padding: 10px;
+	background: url(../images/ic_camera.png) center no-repeat;
+    width: 90%;
+}
+
+.chat-box-detail #chat-form p#chat-submit {
+    width: 20%;
+}
+
+.chat-box-detail #chat-form p#chat-submit input {
+    padding: 10px;
+    background: #0664a3;
+    width: 80%;
+    color: white;
+    font-weight: bold;
+}
+
+#wr_title p strong {
+    color: #0e6198;
+    font-weight: bold;
+}
+/* 사용동의*/
+.confirm-box {
+    padding: 20px 20px 60px 20px;
+    overflow: hidden;
+}
+
+.confirm-box dt, .confirm-box dd {
+    padding: 10px;
+    margin: 3px 0;
+}
+
+.confirm-box dt {
+    font-weight: bold;
+    font-size: 14px;
+    clear: both;
+}
+
+.confirm-box dd {
+    background: white;
+    float: left;
+    width: 91%;
+    border-radius: 4px;
+    border: 1px solid #b9baba;
+}
+.confirm-box footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #edeff4;
+}
+
+.confirm-box footer input {
+    width: 43%;
+    padding: 10px;
+    background: #5974a5;
+    border: 0;
+    border-radius: 4px;
+    color: white;
+}
+.confirm-box dd input[type = text], .confirm-box dd textarea {
+    width: 95%;
+    padding: 5px;
+    border: 0;
+	color: #333;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.confirm-box footer .content-make-group-btn-box {
+    padding: 8px;
+    margin: 0px auto;
+	
+}
+.confirm-box footer .content-make-group-btn-box #btn-make-group-submit {
+    margin-left: 5%;
+	font-weight: bold;
+
+}
+
+.confirm-box footer .content-make-group-btn-box #btn-make-group-cancel {
+    margin-left: 2%;
+	font-weight: bold;
+}

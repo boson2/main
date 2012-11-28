@@ -1,0 +1,114 @@
+#page > header {
+    height: 50px;
+    background: #0e6098 url(../images/bg_header.png);
+}
+
+#page > header #btn_menu {
+    float: left;
+    height: 50px;
+    width: 50px;
+    background: url(../images/btn_menu.png) center no-repeat;
+    border-right: 1px solid #377aa6;
+    cursor: pointer;
+    text-indent: -9999px;
+}
+
+#page > header #logo {
+    background: url(../images/ic_logo.png) center no-repeat;
+    width: 61px;
+    height: 61px;
+    position: absolute;
+    right: 0;
+    z-index: 20;
+    text-indent: -9999px;
+}
+
+#page > header #btn_smart_setting {
+    width: 100px;
+    margin: 0px auto;
+}
+
+#page > header #btn_smart_setting > li {
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    float: left;
+    text-indent: -9999px;
+}
+
+#page > header #btn_smart_setting #btn_smart {
+    position: relative;
+    background: url(../images/btn_smart_setting.png) 15px 15px no-repeat;
+}
+
+#page > header #btn_smart_setting #btn_setting {
+    background: url(../images/btn_smart_setting.png) -30px 15px no-repeat;
+}
+
+#page > header #btn_back {
+    border-right: 1px solid #377AA6;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    float: left;
+    text-indent: -9999px;
+    background: url(../images/btn_back.png) center 17px no-repeat;
+}
+
+/* ¾Ë¸² Ã¢ */
+#notify {
+    display: none;
+    left: 0;
+    margin: 0 auto;
+    max-width: 290px;
+    padding: 5px 6px 6px 6px;
+    position: absolute;
+    right: 0;
+    top: 60px;
+    z-index: 100;
+    background: #36424a;
+}
+
+#notify h3 {
+    color: white;
+    font-size: 16px;
+    display: block;
+    text-indent: 0;
+    font-weight: bold;
+    padding: 10px 15px;
+}
+
+#notify .top-arrow {
+    position: absolute;
+    top: -28px;
+    width: 25px;
+    height: 29px;
+    left: 47%;
+    background: url(../images/ic_top_arrow.png);
+}
+#notify .top-arrow.two{
+	left: 39%;
+}
+
+#notify ul {
+    float: left;
+    padding: 8px;
+    background: white;
+}
+
+#notify ul li {
+    padding: 5px 0;
+    border-bottom: 1px solid #dedfe4;
+    overflow: hidden;
+}
+
+#notify ul li .user-photo {
+    float: left;
+    width: 15%;
+    margin-right: 5px;
+}
+
+#notify ul li .user-contents {
+    float: left;
+    width: 82%;
+}

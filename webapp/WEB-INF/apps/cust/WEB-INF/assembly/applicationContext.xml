@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+						http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+						http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+						
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename" value="messages" />
+	</bean>
+	
+	<!-- SqlMap setup for iBATIS Database Layer -->
+	<bean id="passwordEncoder" class="org.tok.cust.security.passcodec.ShaPasswordEncoder"/>
+	<!--bean id="passwordEncoder" class="org.tok.cust.security.passcodec.PlainTextPasswordEncoder"/-->
+	<!--bean id="passwordEncoder" class="org.tok.cust.security.passcodec.Md5PasswordEncoder"/-->
+
+	<!-- 사용하는 adaptor의 종류에 따른 값을 할당해주어, Interceptor가 올바른 View로 redirect할 수 있게 한다. -->
+	<bean id="securityInterceptor" class="org.tok.cust.security.SecurityInterceptor"/>
+
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="TalkDS" />
+	</bean>
+	
+	<!-- 메일샌더 구현부 -->
+    <bean id="sender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+    	<property name="protocol" value="smtps"/>		<!-- SSL 보안 프로토콜: ex)smtps -->
+        <property name="host" value="smtp.naver.com"/>	<!-- host server: ex)smtp.naver.com -->
+        <property name="port" value="465"/>				<!-- port(SSL:465, Normal:25) -->
+        <property name="username" value="secrain"/>		<!-- id -->
+        <property name="password" value="dkfhgk9389"/>	<!-- password -->
+        <property name="javaMailProperties">			<!-- 설정 -->
+            <props>
+                <prop key="mail.smtps.auth">true</prop>
+                <prop key="mail.smtps.startls.enable">true</prop>
+                <prop key="mail.smtps.debug">true</prop>
+            </props>
+        </property>
+    </bean>
+    
+	<!-- 비밀번호 메일샌더 -->
+	<bean id="tempPasswordMailSender" class="org.tok.cust.user.mail.TempPasswordMailSender">
+		<property name="sender" ref="sender"/>	<!-- 메일샌더 -->
+		<property name="from" value="secrain@naver.com"/>	<!-- 보내는 사람 email 주소 -->
+	</bean>
+	
+	<bean id="org.tok.cust.common.UserInfomationHandler" class="org.tok.cust.common.UserInfomationHandler"/>
+	
+	<bean id="org.tok.cust.user.control.UserManager" class="org.tok.cust.user.control.SiteUserManagerImpl">
+		<property name="passwordEncoder" ref="passwordEncoder" />
+		<property name="tempPasswordMailSender" ref="tempPasswordMailSender"/>
+	</bean>
+	
+	<bean id="tokToolManager" class="org.tok.cust.tool.control.ToolManagerImpl"/>
+	
+	<bean id="talkUserValidator" class="org.tok.cust.user.validator.TalkUserValidator"/>
+	
+	<!-- SqlMap setup for iBATIS Database Layer -->
+    <bean id="org.tok.cust.sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+        <property name="configLocation" value="/WEB-INF/classes/sqlmap/cust/sqlmap-config-${tok.db.type}.xml"/>
+        <property name="dataSource" ref="TalkDS"/>
+    </bean>
+    
+<!-- Tok Admin API-->
+	<bean id="org.tok.cust.admin.dymicMenu.service.DymicMenuServiceImpl" class="org.tok.cust.admin.dymicMenu.service.impl.DymicMenuServiceImpl"> 	
+		<property name="dymicMenuDAO" ref="org.tok.cust.admin.dymicMenu.service.DymicMenuDAO"/>
+	</bean>	
+	<bean id="org.tok.cust.admin.dymicMenu.service.DymicMenuService" name="DymicMenuService" parent="baseTransactionProxy">
+        <property name="proxyInterfaces"><value>org.tok.cust.admin.dymicMenu.service.DymicMenuService</value></property>
+        <property name="target"><ref bean="org.tok.cust.admin.dymicMenu.service.DymicMenuServiceImpl" /></property>
+        <property name="transactionAttributes"><props><prop key="*">PROPAGATION_REQUIRED,-Exception</prop></props></property>
+    </bean>
+	<bean id="org.tok.cust.admin.userpass.service.UserpassServiceImpl" class="org.tok.cust.admin.userpass.service.impl.UserpassServiceImpl"> 	
+		<property name="userpassDAO" ref="org.tok.cust.admin.userpass.service.UserpassDAO"/>
+	</bean>	 
+	<bean id="org.tok.cust.admin.userpass.service.UserpassService" name="UserpassService" parent="baseTransactionProxy">
+        <property name="proxyInterfaces"><value>org.tok.cust.admin.userpass.service.UserpassService</value></property>
+        <property name="target"><ref bean="org.tok.cust.admin.userpass.service.UserpassServiceImpl" /></property>
+        <property name="transactionAttributes"><props><prop key="*">PROPAGATION_REQUIRED,-Exception</prop></props></property>
+    </bean>
+	<bean id="org.tok.cust.admin.grade.service.GradeServiceImpl" class="org.tok.cust.admin.grade.service.impl.GradeServiceImpl"> 	
+		<property name="gradeDAO" ref="org.tok.cust.admin.grade.service.GradeDAO"/>
+	</bean>	 
+	<bean id="org.tok.cust.admin.grade.service.GradeService" name="GradeService" parent="baseTransactionProxy">
+        <property name="proxyInterfaces"><value>org.tok.cust.admin.grade.service.GradeService</value></property>
+        <property name="target"><ref bean="org.tok.cust.admin.grade.service.GradeServiceImpl" /></property>
+        <property name="transactionAttributes"><props><prop key="*">PROPAGATION_REQUIRED,-Exception</prop></props></property>
+    </bean>
+	<bean id="org.tok.cust.admin.todayWord.service.TodayWordServiceImpl" class="org.tok.cust.admin.todayWord.service.impl.TodayWordServiceImpl"> 	
+		<property name="todayWordDAO" ref="org.tok.cust.admin.todayWord.service.TodayWordDAO"/>
+	</bean>
+	<bean id="org.tok.cust.admin.todayWord.service.TodayWordService" name="TodayWordService" parent="baseTransactionProxy">
+        <property name="proxyInterfaces"><value>org.tok.cust.admin.todayWord.service.TodayWordService</value></property>
+        <property name="target"><ref bean="org.tok.cust.admin.todayWord.service.TodayWordServiceImpl" /></property>
+        <property name="transactionAttributes"><props><prop key="*">PROPAGATION_REQUIRED,-Exception</prop></props></property>
+    </bean>
+	
+	<bean id="org.tok.cust.admin.dymicMenu.service.DymicMenuDAO" class="org.tok.cust.admin.dymicMenu.service.impl.DymicMenuDAO"> 	
+		<property name="sqlMapClient" ref="org.tok.cust.sqlMapClient"/>
+	</bean>	 
+	<bean id="org.tok.cust.admin.userpass.service.UserpassDAO" class="org.tok.cust.admin.userpass.service.impl.UserpassDAO"> 	
+		<property name="sqlMapClient" ref="org.tok.cust.sqlMapClient"/>
+	</bean>	 
+	<bean id="org.tok.cust.admin.grade.service.GradeDAO" class="org.tok.cust.admin.grade.service.impl.GradeDAO"> 	
+		<property name="sqlMapClient" ref="org.tok.cust.sqlMapClient"/>
+	</bean>	 
+	<bean id="org.tok.cust.admin.todayWord.service.TodayWordDAO" class="org.tok.cust.admin.todayWord.service.impl.TodayWordDAO"> 	
+		<property name="sqlMapClient" ref="org.tok.cust.sqlMapClient"/>
+	</bean>
+	
+</beans>
